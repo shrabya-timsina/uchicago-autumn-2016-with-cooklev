@@ -166,7 +166,7 @@ def go():
         plot_benford_dist(data, num_digits)
 
         # print only four digits after the decimal point
-        print("MAD: {:.4}".format(benford.compute_benford_MAD(data, num_digits)))
+        print("MAD: {:.4}".format(compute_benford_MAD(data, num_digits)))
 
 if __name__=="__main__":
     go()
