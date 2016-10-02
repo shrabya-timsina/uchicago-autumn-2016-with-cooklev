@@ -32,7 +32,7 @@ LD_POINTS_PER_TEST=LD_POINTS/NUM_LD_TESTS
 def helper_extract_leading_digits(num_digits, amount, expected):
     leading_digits = extract_leading_digits(amount, num_digits)
     if leading_digits != expected:
-        pytest.fail("Expected value ({:d}) and actual value ({:d}) do not match.".format(leading_digits, expected))
+        pytest.fail("Expected value ({:d}) and actual value ({:d}) do not match.".format(expected, leading_digits))
 
 def test_extract_leading_digits_1():
     helper_extract_leading_digits(1, "$2.34", 2)
