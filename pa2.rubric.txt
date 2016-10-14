@@ -1,0 +1,45 @@
+Points:
+    Tests:
+        Points Possible: 20
+        Points Obtained: 
+
+    Structure/Style - basic style:
+        Points Possible: 10
+        Points Obtained: 
+
+    Structure/Style - decomposition:
+        Points Possible: 10
+        Points Obtained: 
+
+    Structure/Style - repeated code:
+        Points Possible: 5
+        Points Obtained: 
+
+    Implementation Details - homeowner satisfaction test:
+        Points Possible: 15
+        Points Obtained: 
+
+    Implementation Details - compute initial open locations:
+        Points Possible: 5
+        Points Obtained: 
+
+    Implementation Details - compute list of unsatisfied homeowners:
+        Points Possible: 5
+        Points Obtained: 
+
+    Implementation Details - attempt to move homeowner from location:
+        Points Possible: 10
+        Points Obtained: 
+
+    Implementation Details - simulate one step:
+        Points Possible: 10
+        Points Obtained: 
+
+    Implementation Details - full simulation:
+        Points Possible: 10
+        Points Obtained: 
+
+Total Points: 0 / 100
+
+Comments: >
+    None
