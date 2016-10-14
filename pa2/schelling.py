@@ -1,3 +1,4 @@
+#  Names: Shrabya Timsina and Steven Cooklev
 #  CS121: Schelling Model of Housing Segregation
 #
 #   Program for simulating of a variant of Schelling's model of
