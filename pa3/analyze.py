@@ -101,10 +101,10 @@ def find_top_k_ngrams(tweets, n, stop_words, stop_prefixes, k):
     Inputs:
         tweets: a list of tweets
         n: integer
-        k: integer
         stop_words: a set of strings to ignore
         stop_prefixes: a set of strings.  Words w/ a prefix that
           appears in this list should be ignored.
+        k: integer
 
     Returns: list of key/value pairs sorted in non-increasing order
       by value.
@@ -123,10 +123,11 @@ def find_min_count_ngrams(tweets, n, stop_words, stop_prefixes, min_count):
     Inputs:
         tweets: a list of tweets
         n: integer
-        k: integer
         stop_words: a set of strings to ignore
         stop_prefixes: a set of strings.  Words w/ a prefix that
           appears in this list should be ignored.
+        min_count: integer
+
 
     Returns: list of key/value pairs sorted in non-increasing order
       by value.
@@ -144,10 +145,10 @@ def find_frequent_ngrams(tweets, n, stop_words, stop_prefixes, k):
     Inputs:
         tweets: a list of tweets
         n: integer
-        k: integer
         stop_words: a set of strings to ignore
         stop_prefixes: a set of strings.  Words w/ a prefix that
           appears in this list should be ignored.
+        k: integer
 
     Returns: list of key/value pairs sorted in non-increasing order
       by value.

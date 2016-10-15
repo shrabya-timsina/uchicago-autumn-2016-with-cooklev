@@ -11,7 +11,7 @@ def find_top_k(items, k):
         items: a list of items
         k: integer 
 
-    Returns: list of K items.
+    Returns: sorted list of K tuples
 
     '''
     # YOUR CODE HERE
@@ -24,10 +24,10 @@ def find_min_count(items, min_count):
     Find the items that occur at least min_count times
 
     Inputs:
-        counts: dictionary that maps items to counts
-        k: integer
+        items: a list of items    
+        min)count: integer
         
-    Returns: sorted list of hashtab/count pairs
+    Returns: sorted list of tuples
     '''
 
     # YOUR CODE HERE
@@ -42,9 +42,9 @@ def find_frequent(items, k):
 
     Input: 
         items: list of items
-        fraction: float
+        k: integer
 
-    Returns: dictionary that maps hashtags (strings) to counts
+    Returns: sorted list of tuples
     '''
     # YOUR CODE HERE
     # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
