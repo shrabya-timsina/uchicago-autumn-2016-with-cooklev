@@ -6,5 +6,6 @@
 *.sublime-*
 .chisubmit
 __pycache__
-hrc-all.json
-djt-all.json
+hrc-*.json
+djt-*.json
+*.gz
