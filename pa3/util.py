@@ -70,9 +70,7 @@ def sort_count_pairs(l):
     first value as the seconary sort key.
 
     Inputs: 
-        d: dictionary.
-        reverse: sort in decreasing order if reverse is True,
-           increasing order otherwise.
+       l: list of pairs.
 
     Returns: list of key/value pairs
     '''
