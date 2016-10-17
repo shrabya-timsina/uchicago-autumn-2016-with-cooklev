@@ -243,7 +243,7 @@ def go(args):
                                 STOP_PREFIXES["default"], args.k[0]))
     elif task == 5:
         print(find_min_count_ngrams(tweets, args.n[0], BOTH_CAND_STOP_WORDS, 
-                                    STOP_PREFIXES["default"], args.k[0]))
+                                    STOP_PREFIXES["default"], args.min_count[0]))
     elif task == 6:
         print(find_frequent_ngrams(tweets, args.n[0], BOTH_CAND_STOP_WORDS, 
                                    STOP_PREFIXES["default"], args.k[0]))
