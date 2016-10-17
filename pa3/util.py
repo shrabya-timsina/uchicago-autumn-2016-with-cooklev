@@ -123,13 +123,13 @@ def pretty_print_by_month(results):
             row.append((s, count))
             longest = max(longest, len(s))
 
-        massaged.append((d_str, row))
+        massaged.append((d, d_str, row))
 
     # Add two for padding
     longest = longest + 2
 
     # print result
-    for (date_str, ngrams) in massaged:
+    for (_, date_str, ngrams) in sorted(massaged):
         if len(ngrams) == 0:
             print(date_str)
         else:
