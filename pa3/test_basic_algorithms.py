@@ -43,7 +43,7 @@ def helper(test_name, test_fn, input0, input1, expected_result):
                     s = s + "  Actual and expected results do not match.  First difference at index {}.\n"
                     s = s + "  Actual result: {}\n"
                     s = s + "  Expected result: {}\n"
-                    pytest.fail(s.format(test_name, actual_result, expected_result))
+                    pytest.fail(s.format(test_name, i, actual_result, expected_result))
 
             
 ############### top-k tests ###############
