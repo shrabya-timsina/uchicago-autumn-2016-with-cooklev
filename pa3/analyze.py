@@ -35,6 +35,21 @@ BOTH_CAND_STOP_WORDS = STOP_WORDS["both"]
 
 
 # Task 1
+
+def gener_value_list(tweets, entity_key, value_key):
+    
+    value_list = []
+
+    for tweet in tweets:
+        for entity in tweet["entities"][entity_key]:
+
+            if tweet["entities"][entity_key] != None:
+            
+                lowering_case = entity[value_key].lower()
+                value_list.append(lowering_case)
+
+    return value_list
+
 def find_top_k_entities(tweets, entity_key, value_key, k):
     '''
     Find the K most frequently occuring entitites
@@ -48,9 +63,12 @@ def find_top_k_entities(tweets, entity_key, value_key, k):
     Returns: list of entity, count pairs sorted in non-decreasing order by count.
 
     '''
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    
+    val_list = gener_value_list(tweets, entity_key, value_key)
+    top_k_entities = find_top_k(val_list, k) 
+
+
+    return top_k_entities
 
 
 # Task 2
@@ -67,10 +85,10 @@ def find_min_count_entities(tweets, entity_key, value_key, min_count):
     Returns: list of entity, count pairs sorted in non-decreasing order by count.
     '''
 
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    val_list = gener_value_list(tweets, entity_key, value_key)
+    mincount_entities = find_min_count(val_list, min_count)
 
+    return mincount_entities
 
 # Task 3
 def find_frequent_entities(tweets, entity_key, value_key, k):
@@ -86,13 +104,52 @@ def find_frequent_entities(tweets, entity_key, value_key, k):
 
     Returns: list of entity, count pairs sorted in non-decreasing order by count.
     '''
+    
+    val_list = gener_value_list(tweets, entity_key, value_key)
+    freq_entities = find_frequent(val_list, k)
+    
 
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    return freq_entities
 
 
 # Task 4
+
+def gen_ngramslist(tweets, n, stop_words, stop_prefixes):
+
+    prefix_tuple = tuple(stop_prefixes)
+
+    value_list = []
+
+    for tweet in tweets:
+        if tweet["text"] != None: 
+
+            lowercase_text = tweet["text"].lower()
+            format_text = lowercase_text.split()
+            
+            #format_text = map(str.strip(PUNCTUATION), format_text)
+            format_text = [word.strip(PUNCTUATION) for word in format_text]
+            #for word in format_text:
+               # print(word)
+               # word = word.strip(PUNCTUATION)
+                #print(word)
+          
+
+
+
+
+            format_text = [word for word in format_text if word not in stop_words]
+           
+            format_text = [word for word in format_text if word.startswith(prefix_tuple) == False] 
+
+            for index in range(0, len(format_text) - n + 1):
+                tuple_elements = []
+                for i in range(0,n):
+                    tuple_elements.append(format_text[index + i]) 
+                 
+                value_list.append(tuple(tuple_elements))
+
+    return value_list
+
 def find_top_k_ngrams(tweets, n, stop_words, stop_prefixes, k):
     '''
     Find k most frequently occurring n-grams or
@@ -109,10 +166,19 @@ def find_top_k_ngrams(tweets, n, stop_words, stop_prefixes, k):
     Returns: list of key/value pairs sorted in non-increasing order
       by value.
     '''
+    
+    ngram_list = gen_ngramslist(tweets, n, stop_words, stop_prefixes)
 
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    
+    if k >= 0:
+        topk_tuples = find_top_k(ngram_list, k)
+       
+    else:
+        topk_tuples = find_top_k(ngram_list, len(ngram_list))
+
+
+
+    return topk_tuples
 
 
 # Task 5
@@ -132,9 +198,10 @@ def find_min_count_ngrams(tweets, n, stop_words, stop_prefixes, min_count):
     Returns: list of key/value pairs sorted in non-increasing order
       by value.
     '''
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    ngram_list = gen_ngramslist(tweets, n, stop_words, stop_prefixes)
+    mincount_ngram = find_min_count(ngram_list, min_count)
+
+    return mincount_ngram
 
 
 # Task 6
@@ -154,9 +221,18 @@ def find_frequent_ngrams(tweets, n, stop_words, stop_prefixes, k):
       by value.
     '''
 
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    ngram_list = gen_ngramslist(tweets, n, stop_words, stop_prefixes)
+   
+    freq_ngram = find_frequent(ngram_list, k)
+
+    if k >= 0:
+        freq_ngram = find_frequent(ngram_list, k)
+        
+    else:
+        freq_ngram = find_frequent(ngram_list, len(ngram_list))
+    
+
+    return freq_ngram
 
 
 # Task 7

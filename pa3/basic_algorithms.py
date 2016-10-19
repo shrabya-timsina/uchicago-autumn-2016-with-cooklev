@@ -14,9 +14,22 @@ def find_top_k(items, k):
     Returns: sorted list of K tuples
 
     '''
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    
+    dic_itemcount = {}
+
+    #getting count of items
+    for item in items:
+
+        dic_itemcount[item] = dic_itemcount.get(item, 0) + 1
+
+    #turning into list from dictionary values
+    list_itemcount = dic_itemcount.items()
+    #using imported func to order list
+    ordered_itemcount = sort_count_pairs(list_itemcount)
+
+    first_k_items = ordered_itemcount[0:k] 
+
+    return first_k_items
 
 
 def find_min_count(items, min_count):
@@ -30,9 +43,23 @@ def find_min_count(items, min_count):
     Returns: sorted list of tuples
     '''
 
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    dic_allcount = {}
+
+    #getting count of items
+    for item in items:
+
+        dic_allcount[item] = dic_allcount.get(item, 0) + 1
+
+    
+    list_mincount = [(item, count) for item, count in dic_allcount.items() if count >= min_count]
+
+    #using imported func to order list
+    ordered_mincount = sort_count_pairs(list_mincount)
+
+    
+    return ordered_mincount
+
+
 
 
 def find_frequent(items, k):
@@ -46,6 +73,21 @@ def find_frequent(items, k):
 
     Returns: sorted list of tuples
     '''
-    # YOUR CODE HERE
-    # REPLACE RETURN VALUE WITH AN APPROPRIATE VALUE
-    return []
+    freq_dic = {}
+
+    for item in items:
+
+        if item not in freq_dic:
+            if len(freq_dic) < (k - 1):
+                freq_dic.update({item: 1})
+            else:
+                freq_dic = {item: count - 1 for item, count in freq_dic.items()}
+
+                freq_dic = {item: count for item, count in freq_dic.items() if count != 0}
+        else: 
+            freq_dic[item] = freq_dic[item] + 1
+
+
+    ordered_freq_list = sort_count_pairs(freq_dic.items())
+
+    return ordered_freq_list
