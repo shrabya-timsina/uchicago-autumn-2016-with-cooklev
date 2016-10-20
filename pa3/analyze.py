@@ -1,3 +1,4 @@
+#Name: Shrabya Timsina & Steven Cooklev
 # CS121: Analyzing Election Tweets
 # Part 2
 
@@ -142,15 +143,13 @@ def gen_ngramslist(tweets, n, stop_words, stop_prefixes):
 
             format_text = preprocess(tweet["text"], prefix_tuple, stop_words)
 
-
             for index in range(0, len(format_text) - n + 1):
-                #tuple_elements = []
+                    
                 tuple_set = ()
                 for i in range(0,n):
-                    #tuple_elements.append(format_text[index + i]) 
+                         
                     tuple_set = tuple_set + (format_text[index + i],) 
-                 
-                #value_list.append(tuple(tuple_elements))
+                     
                 value_list.append(tuple_set)
 
     return value_list
