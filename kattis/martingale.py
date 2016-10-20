@@ -38,7 +38,7 @@ if __name__ == "__main__":
     money = solve(initial_money, initial_bet, coin_flips)
 
     if money == 0:
-        print "BROKE"
+        print("BROKE")
     else:
-        print money
+        print(money)
 
