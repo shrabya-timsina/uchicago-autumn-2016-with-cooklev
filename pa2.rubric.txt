@@ -13,7 +13,7 @@ Points:
 
     Structure/Style - repeated code:
         Points Possible: 5
-        Points Obtained: 0
+        Points Obtained: 5
 
     Implementation Details - homeowner satisfaction test:
         Points Possible: 15
@@ -39,7 +39,7 @@ Points:
         Points Possible: 10
         Points Obtained: 10
 
-Total Points: 0 / 100
+Total Points: 90 / 100
 
 Comments: >
     Naming of variables can be improved, sometimes you
