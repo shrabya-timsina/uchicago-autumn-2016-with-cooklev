@@ -1,45 +1,48 @@
 Points:
     Tests:
         Points Possible: 20
-        Points Obtained: 
+        Points Obtained: 20
 
     Structure/Style - basic style:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 5
 
     Structure/Style - decomposition:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 5
 
     Structure/Style - repeated code:
         Points Possible: 5
-        Points Obtained: 
+        Points Obtained: 0
 
     Implementation Details - homeowner satisfaction test:
         Points Possible: 15
-        Points Obtained: 
+        Points Obtained: 15
 
     Implementation Details - compute initial open locations:
         Points Possible: 5
-        Points Obtained: 
+        Points Obtained: 5
 
     Implementation Details - compute list of unsatisfied homeowners:
         Points Possible: 5
-        Points Obtained: 
+        Points Obtained: 5
 
     Implementation Details - attempt to move homeowner from location:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 10
 
     Implementation Details - simulate one step:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 10
 
     Implementation Details - full simulation:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 10
 
 Total Points: 0 / 100
 
 Comments: >
-    None
+    Naming of variables can be improved, sometimes you
+    made additions to the program (notably in case-checking with 
+    assertions) which were well-intentioned but did not add much 
+    utility to the function(s) in the way they were implemented.

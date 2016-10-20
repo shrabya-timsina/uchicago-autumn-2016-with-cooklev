@@ -22,6 +22,7 @@ import os
 import sys
 import utility
 
+### GRADER COMMENT: Overall function composition. PENALTY: -5
 
 def is_satisfied(grid, R, threshold, location):
     '''
@@ -51,6 +52,14 @@ def is_satisfied(grid, R, threshold, location):
    
     
     #ensuring we are not checking an empty house
+
+    ### GRADER COMMENT: It's fine if you want include 
+    # your own assertion statements to add another layer
+    # of error-checking to your code, but in this case you're
+    # asserting over a string, which by inspecting will always
+    # return True. Assign home_taken to actual booleans instead
+    # of strings if you want to check this next time. PENALTY: -1
+
     if grid[home_row][home_col] == "R" or grid[home_row][home_col] == "B":
        home_taken = "True"
     else: 
@@ -86,10 +95,23 @@ def is_satisfied(grid, R, threshold, location):
 
     
     #checking satisfaction score against threshold
+
+    ###GRADER COMMENT: If you're going to handle all 
+    # of the different cases for color properties
+    # of homeowners ("B", "R", etc) your code will
+    # be less scalable and maintainable than if you 
+    # are just concerned with matching the homeowner
+    # to all of the corresponding neighbors with the 
+    # same color property. (i.e. homeowner_color = grid[row][col]
+    # instead of expanding into cases). PENALTY: -1
+
     if homeowner_colour == "B":
         satisfaction = blue_num + (0.5 * open_num)
     else:
         satisfaction = red_num + (0.5 * open_num)
+
+    ### GRADER COMMENT: You can just do 
+    # return (satisfaction/total_neighbour >= threshold)
 
     if (satisfaction/total_neighbour) >= threshold:
         return True
@@ -125,6 +147,9 @@ def find_open_locations(grid):
     return available_homes 
             
 
+### GRADER COMMENT: Please choose a better function
+# name, e.g. get_disatisfied_owners. PENALTY: -1
+
 def find_dissas_owners(grid, R, threshold):
     '''
     create and initialize the list of unsatisfied homeowners
@@ -150,6 +175,7 @@ def find_dissas_owners(grid, R, threshold):
             if not grid[row][col] == "O":
                 dissas_coords = (row, col)
                 satischeck = is_satisfied(grid, R, threshold, dissas_coords)
+                ### GRADER COMMENT: Can also say (if !satischeck:)
                 if satischeck == False:
                     dissas_owners.append(dissas_coords)
 
@@ -169,8 +195,16 @@ def relocate(grid, R, threshold, available_homes, dissas_owners):
     Returns:
         grid: list of lists of strings of post-relocation grid
     '''
-    
+    ### GRADER COMMENT: You mention that the return value 
+    # is an nxn array, but you actually return a boolean, grid_change
+    # PENALTY: -1
+
     grid_change = False
+
+    ### GRADER COMMENT: Be more precise with 
+    # variable names. I can infer that dis_own
+    # represents disatisfied_owner, but out of 
+    # context it isn't always clear.
 
     for dis_own in dissas_owners:
         (d_row, d_col) = dis_own
@@ -241,6 +275,9 @@ def do_simulation(grid, R, threshold, max_steps):
         #checks for changes in grid
         #if true then goes on to next step / if false returns num of steps    
         if perform_step == False:
+            ### GRADER COMMENT: It's not ideal to return any variable + n,
+            # the modifications should occur before the return statement.
+            # PENALTY: -1
             return steps + 1
         else:
             dissas_owners = find_dissas_owners(grid, R, threshold)
