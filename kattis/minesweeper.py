@@ -53,9 +53,6 @@ if __name__ == "__main__":
             row.append(int(tokens.pop(0)))
         field.append(row)
 
-    print(field)
-    print()
-
     result = solve(field)
     print(result_to_str(result))
 
