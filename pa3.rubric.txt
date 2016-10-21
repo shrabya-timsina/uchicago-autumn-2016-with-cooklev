@@ -1,0 +1,49 @@
+Points:
+    Tests:
+        Points Possible: 30
+        Points Obtained: 
+
+    Structure/Style - basic style:
+        Points Possible: 10
+        Points Obtained: 
+
+    Structure/Stype - decomposition:
+        Points Possible: 15
+        Points Obtained: 
+
+    Implementation Details - Task 0 - find_top_k:
+        Points Possible: 2.5
+        Points Obtained: 
+
+    Implementation Details - Task 0 - find_min_count:
+        Points Possible: 2.5
+        Points Obtained: 
+
+    Implementation Details - Task 0 - find_frequent:
+        Points Possible: 5
+        Points Obtained: 
+
+    Implementation Details - Tasks 1-3:
+        Points Possible: 10
+        Points Obtained: 
+
+    Implementation Details - Task 4-6 - preprocessing tweets:
+        Points Possible: 3.5
+        Points Obtained: 
+
+    Implementation Details - Task 4-6 - finding ngrams:
+        Points Possible: 5.5
+        Points Obtained: 
+
+    Implementation Details - Task 4-6 - putting it together:
+        Points Possible: 6
+        Points Obtained: 
+
+    Implementation Details - Task 7:
+        Points Possible: 10
+        Points Obtained: 
+
+Total Points: 0 / 100
+
+Comments: >
+    None
