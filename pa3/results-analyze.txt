@@ -1,0 +1,82 @@
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-all.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-2.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/syn-0.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/syn-1.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/djt-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-feb.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/zero-tweets.json'
+[Errno 2] No such file or directory: '/Users/amr/cmsc12X00-instructors/121/pa-sphinx/pa3-election-tweets/grading-staging/data/hrc-0.json'
+test_task1_0: 0.00/0.50
+test_task1_1: 0.00/0.50
+test_task1_2: 0.00/0.50
+test_task1_3: 0.00/0.50
+test_task1_4: 0.00/0.50
+test_task1_5: 0.00/0.50
+test_task1_6: 0.00/0.50
+test_task1_7: 0.00/0.50
+test_task2_0: 0.00/0.50
+test_task2_1: 0.00/0.50
+test_task2_2: 0.00/0.50
+test_task2_3: 0.00/0.50
+test_task2_4: 0.00/0.50
+test_task2_5: 0.00/0.50
+test_task3_0: 0.00/0.50
+test_task3_1: 0.00/0.50
+test_task3_2: 0.00/0.50
+test_task3_3: 0.00/0.50
+test_task3_4: 0.00/0.50
+test_task3_5: 0.00/0.50
+test_task4_0: 0.00/0.50
+test_task4_1: 0.00/0.50
+test_task4_2: 0.00/0.50
+test_task4_3: 0.00/0.50
+test_task4_4: 0.00/0.50
+test_task4_5: 0.00/0.50
+test_task4_6: 0.00/0.50
+test_task4_7: 0.00/0.50
+test_task4_8: 0.00/0.50
+test_task5_0: 0.00/0.50
+test_task5_1: 0.00/0.50
+test_task5_2: 0.00/0.50
+test_task5_3: 0.00/0.50
+test_task6_0: 0.00/0.50
+test_task6_1: 0.00/0.50
+test_task6_2: 0.00/0.50
+test_task7_0: 0.00/0.50
+test_task7_1: 0.00/0.50
+test_task7_2: 0.00/0.50
+test_task7_3: 0.00/0.50
+
+Total: 0.00/20.00
