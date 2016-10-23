@@ -9,7 +9,7 @@ Points:
 
     Structure/Style - decomposition:
         Points Possible: 10
-        Points Obtained: 5
+        Points Obtained: 10
 
     Structure/Style - repeated code:
         Points Possible: 5
@@ -17,7 +17,7 @@ Points:
 
     Implementation Details - homeowner satisfaction test:
         Points Possible: 15
-        Points Obtained: 15
+        Points Obtained: 14
 
     Implementation Details - compute initial open locations:
         Points Possible: 5
@@ -39,10 +39,13 @@ Points:
         Points Possible: 10
         Points Obtained: 10
 
-Total Points: 90 / 100
+Total Points: 94 / 100
 
 Comments: >
     Naming of variables can be improved, sometimes you
     made additions to the program (notably in case-checking with 
     assertions) which were well-intentioned but did not add much 
     utility to the function(s) in the way they were implemented.
+
+    Your in-line comments are excessive.  Let your code speak
+    for itself.

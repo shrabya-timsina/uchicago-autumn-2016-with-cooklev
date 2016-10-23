@@ -58,7 +58,8 @@ def is_satisfied(grid, R, threshold, location):
     # of error-checking to your code, but in this case you're
     # asserting over a string, which by inspecting will always
     # return True. Assign home_taken to actual booleans instead
-    # of strings if you want to check this next time. PENALTY: -1
+    # of strings if you want to check this next time. 
+    PENALTY: -1
 
     if grid[home_row][home_col] == "R" or grid[home_row][home_col] == "B":
        home_taken = "True"
@@ -112,6 +113,7 @@ def is_satisfied(grid, R, threshold, location):
 
     ### GRADER COMMENT: You can just do 
     # return (satisfaction/total_neighbour >= threshold)
+    # PENALTY: -1
 
     if (satisfaction/total_neighbour) >= threshold:
         return True
@@ -175,7 +177,7 @@ def find_dissas_owners(grid, R, threshold):
             if not grid[row][col] == "O":
                 dissas_coords = (row, col)
                 satischeck = is_satisfied(grid, R, threshold, dissas_coords)
-                ### GRADER COMMENT: Can also say (if !satischeck:)
+                ### GRADER COMMENT: Can also say (if not satischeck:)
                 if satischeck == False:
                     dissas_owners.append(dissas_coords)
 
