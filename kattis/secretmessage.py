@@ -16,27 +16,6 @@ def solve(message):
 
     Returns: String. The secret message
     """
-    L = len(message)
-    M = int(math.ceil(math.sqrt(L)))
-    
-    table = [ [0]*M for _ in range(M) ]
-    k = 0
-    for i in range(M):
-        for j in range(M):
-            if k < L:
-                table[i][j] = message[k]
-                k += 1
-            else:
-                table[i][j] = "*"
-
-    secret_message = ""
-    for j in range(M):
-        for i in range(M-1,-1,-1):
-            if table[i][j] != "*":
-                secret_message += table[i][j]
-
-    return secret_message        
-
     # YOUR CODE HERE
 
     # Replace "" with your return value
