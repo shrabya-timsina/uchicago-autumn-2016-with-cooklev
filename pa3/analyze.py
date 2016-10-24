@@ -173,6 +173,9 @@ def gen_ngramslist(tweets, n, stop_words, stop_prefixes):
             format_text = preprocess(tweet["text"], prefix_tuple, stop_words)
 
             for index in range(0, len(format_text) - n + 1):                
+                ### GRADER COMMENT
+                # This works, but a simple list slice would also have sufficed:
+                #   value_list.append(tuple(format_text[index: index + n]))
                 tuple_set = ()
 
                 for i in range(0,n):                       
@@ -286,6 +289,9 @@ def find_top_k_ngrams_by_month(tweets, n, stop_words, stop_prefixes, k):
         year_month = grab_year_month(tweet["created_at"])
         tweet_month_dic[year_month] = tweet_month_dic.get(year_month, [])
 
+        ### GRADER COMMENT
+        ### PENALTY: -1 points
+        # See comment about repeated code in basic_algorithms.py.
         if tweet["text"] != None: 
             format_text = preprocess(tweet["text"], prefix_tuple, stop_words)
 

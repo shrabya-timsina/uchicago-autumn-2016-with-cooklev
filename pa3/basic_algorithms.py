@@ -45,6 +45,16 @@ def find_min_count(items, min_count):
 
     dic_allcount = {}
 
+    ### GRADER COMMENT
+    # Any time that you see code like this, that is an exact copy of code some-
+    # where else, it is a good idea to "refactor" out the identical code into
+    # a separate helper function. This serves to group together functionally 
+    # identical code structures as well as make it easier on debugging. Imagine
+    # if this functionality had a bug in it, then you would have to change two
+    # independent loci of code to fix the bug. If this functionality were con-
+    # tained in a helper sub-function, then you would need only debug that one
+    # sub-function.
+
     # getting count of items
     for item in items:
         dic_allcount[item] = dic_allcount.get(item, 0) + 1
