@@ -1,6 +1,6 @@
 # CS121: Polling places
 #
-# YOUR NAME(s) HERE
+# Steven and Shrabya
 #
 # Main file for polling place simulation
 
@@ -9,25 +9,71 @@ import util
 
 from queue import PriorityQueue
 
+def test():
+    Precinct("data/config-0.json", 3)
+    Voter_Sample("data/config-0.json", 3)
+    Voter("data/config-0.json", 3)
 
 ### YOUR voter, voter_sample, and precinct classes GO HERE.
+        
+class Precinct(object):
+    def __init__(self, json, num_booths):
+        key = util.setup_config(json, num_booths)
+        
+        self.arrival_rate = key["arrival_rate"]
+        self.hours_open = key["hours_open"]
+        self.num_voters = key["num_voters"]
+        self.num_booths = num_booths
+        self.seed = key["seed"]
+        self.voting_duration_rate = key["voting_duration_rate"]
+
+    def __repr__(self):
+        return ("arrival_rate is " + str(self.arrival_rate) + 
+            ", hours_open are " + str(self.hours_open) +
+            ", num_voters are " + str(self.num_voters) +
+            ", seed: " + str(self.seed))    
+
+class Voter_Sample(object):
+    voter_list = []
+    def __init__(self, json, num_booths):
+        Precinct.__init__(self, json, num_booths)
+        Voter.__init__(self, json, num_booths)
+        while self.hours_open > 0:
+            voter_info = (arrival_time(self), voting_duration(self), self.start_time, self.departure_time)
+            voter_list.append(voter_info)
+            self.hours_open = self.hours_open - arrival_time(self)
+        print(voter_list)    
+
 
 class Voter(object):
     ID = 0
-    def __init__(self, ID, time_to_arrive, waiting_time, voting_duration, departure_time):
-        self.ID = Voter.ID
+    def __init__(self, json, num_booths):
+        self.ID = ID
         ID += 1
-        self.time_to_arrive = None
-        self.waiting_time = waiting_time
-        self.voting_duration = voting_duration
-        self.departure_time = departure_time
+        self.arrival_rate = arrival_rate
+        self.voting_duration_rate = voting_duration_rate
 
-        
+    def __repr__(self):
+        return ("arrival_time for voter is: " + str(self.arrival_time) +
+            " departure_time:" + str(self.departure_time) + 
+            " Voter ID is" + str(self.ID))
 
-    # Include the time the voter arrives at the polls (time to arrive, initialized to None)
-    #, voting duration, time voter is assigned to a voting booth (waiting time).
-    # store a unique identifier
-    # departure time
+
+    @property
+    def arrival_time(self):
+        self.gap = util.gen_voter_parameters(arrival_rate, voting_duration_rate)[0]
+        prev_ID = self.ID - 1
+        self.arrival_time = self.gap + arrival_time(self.prev_ID)
+        return self.arrival_time
+
+
+    @property
+    def voting_duration(self):
+        return util.gen_voter_parameters(arrival_rate, voting_duration_rate)[1]
+
+    @property
+    def departure_time(self):
+        return (voting_duration(self) + start_time(self))
 
 
 
