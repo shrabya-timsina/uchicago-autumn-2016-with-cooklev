@@ -35,10 +35,10 @@ if __name__ == "__main__":
     n = int(tokens.pop(0))
     cointosses = [int(tokens.pop(0)) for i in range(n)]
 
-    money = solve(initial_money, initial_bet, coin_flips)
+    money = solve(initial_money, initial_bet, cointosses)
 
     if money == 0:
-        print "BROKE"
+        print("BROKE")
     else:
-        print money
+        print(money)
 
