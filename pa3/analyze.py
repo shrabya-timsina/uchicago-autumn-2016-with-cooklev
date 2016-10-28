@@ -1,4 +1,4 @@
-#Name: Shrabya Timsina & Steven Cooklev
+# Name: Shrabya Timsina & Steven Cooklev
 # CS121: Analyzing Election Tweets
 # Part 2
 
@@ -35,22 +35,34 @@ BOTH_CAND_STOP_WORDS = STOP_WORDS["both"]
 #####################  MODIFY THIS CODE ##################### 
 
 
-# Task 1
-
+# basic function implemented in tasks 1,2, and 3
 def gener_value_list(tweets, entity_key, value_key):
+    '''
+    Find the values within the specified entity key of a tweet
+
+    Inputs:
+        tweets: a list of tweets
+        entity_key: a string ("hashtags", "user_mentions", etc)
+        value_key: string (appropriate value depends on the entity type)
+        k: integer
+
+    Returns: list of values within entitiy key of tweet
+    '''
     
     value_list = []
 
     for tweet in tweets:
         for entity in tweet["entities"][entity_key]:
 
+            # skip empty values
             if tweet["entities"][entity_key] != None:
-            
                 lowering_case = entity[value_key].lower()
                 value_list.append(lowering_case)
 
     return value_list
 
+
+# Task 1
 def find_top_k_entities(tweets, entity_key, value_key, k):
     '''
     Find the K most frequently occuring entitites
@@ -62,12 +74,10 @@ def find_top_k_entities(tweets, entity_key, value_key, k):
         k: integer 
 
     Returns: list of entity, count pairs sorted in non-decreasing order by count.
-
     '''
     
     val_list = gener_value_list(tweets, entity_key, value_key)
     top_k_entities = find_top_k(val_list, k) 
-
 
     return top_k_entities
 
@@ -91,6 +101,7 @@ def find_min_count_entities(tweets, entity_key, value_key, min_count):
 
     return mincount_entities
 
+
 # Task 3
 def find_frequent_entities(tweets, entity_key, value_key, k):
     '''
@@ -109,51 +120,69 @@ def find_frequent_entities(tweets, entity_key, value_key, k):
     val_list = gener_value_list(tweets, entity_key, value_key)
     freq_entities = find_frequent(val_list, k)
     
-
     return freq_entities
 
 
-# Task 4
-
+# the following 2 functions are implemented in tasks 4,5, and 6
 def preprocess(tweet_text, prefix_tuple, stop_words):
+    '''
+    Format a string to be counted properly
+
+    Inputs:
+        tweet_text: a string
+        prefix_tuple: a tuple of strings (prefixes) to ignore
+        stop_words: a set of strings (words) to ignore
+
+    Returns: string    
+    '''
     
     lowercase_text = tweet_text.lower()
     split_text = lowercase_text.split()
             
-            
     format_text = [] #list to store words after processing
-
 
     for word in split_text:
         word2 = word.strip(PUNCTUATION)
-        if word2 not in stop_words and word2.startswith(prefix_tuple) == False and word2 != "":
+        if (word2 not in stop_words and
+        word2.startswith(prefix_tuple) == False and
+        word2 != ""):
             format_text.append(word2)
 
     return format_text
 
 
 def gen_ngramslist(tweets, n, stop_words, stop_prefixes):
+    '''
+    Find n-grams in tweets
+    
+    Inputs:
+        tweets: a list of tweets
+        n: integer
+        stop_words: a set of strings to ignore
+        stop_prefixes: a set of strings.  Words w/ a prefix that
+          appears in this list should be ignored.
+
+    Returns: list of key/ value pairs
+    '''
 
     prefix_tuple = tuple(stop_prefixes)
-
     value_list = []
 
     for tweet in tweets:
         if tweet["text"] != None: 
-
             format_text = preprocess(tweet["text"], prefix_tuple, stop_words)
 
-            for index in range(0, len(format_text) - n + 1):
-                    
+            for index in range(0, len(format_text) - n + 1):                
                 tuple_set = ()
-                for i in range(0,n):
-                         
+
+                for i in range(0,n):                       
                     tuple_set = tuple_set + (format_text[index + i],) 
-                     
                 value_list.append(tuple_set)
 
     return value_list
 
+
+# Task 4
 def find_top_k_ngrams(tweets, n, stop_words, stop_prefixes, k):
     '''
     Find k most frequently occurring n-grams or
@@ -173,14 +202,10 @@ def find_top_k_ngrams(tweets, n, stop_words, stop_prefixes, k):
     
     ngram_list = gen_ngramslist(tweets, n, stop_words, stop_prefixes)
 
-    
     if k >= 0:
-        topk_tuples = find_top_k(ngram_list, k)
-       
+        topk_tuples = find_top_k(ngram_list, k)       
     else:
         topk_tuples = find_top_k(ngram_list, len(ngram_list))
-
-
 
     return topk_tuples
 
@@ -197,7 +222,6 @@ def find_min_count_ngrams(tweets, n, stop_words, stop_prefixes, min_count):
         stop_prefixes: a set of strings.  Words w/ a prefix that
           appears in this list should be ignored.
         min_count: integer
-
 
     Returns: list of key/value pairs sorted in non-increasing order
       by value.
@@ -226,21 +250,17 @@ def find_frequent_ngrams(tweets, n, stop_words, stop_prefixes, k):
     '''
 
     ngram_list = gen_ngramslist(tweets, n, stop_words, stop_prefixes)
-   
     freq_ngram = find_frequent(ngram_list, k)
 
     if k >= 0:
-        freq_ngram = find_frequent(ngram_list, k)
-        
+        freq_ngram = find_frequent(ngram_list, k)     
     else:
         freq_ngram = find_frequent(ngram_list, len(ngram_list))
     
-
     return freq_ngram
 
 
 # Task 7
-
 def find_top_k_ngrams_by_month(tweets, n, stop_words, stop_prefixes, k):
     '''                                                                                                            
     Find the top k ngrams for each month.
@@ -258,54 +278,36 @@ def find_top_k_ngrams_by_month(tweets, n, stop_words, stop_prefixes, k):
     '''
     
     prefix_tuple = tuple(stop_prefixes)
-
-
     tweet_month_dic = {}
 
     for tweet in tweets:
+
+        # use the given function to get the date of the tweet 
         year_month = grab_year_month(tweet["created_at"])
         tweet_month_dic[year_month] = tweet_month_dic.get(year_month, [])
 
-
         if tweet["text"] != None: 
-
             format_text = preprocess(tweet["text"], prefix_tuple, stop_words)
 
-
             for index in range(0, len(format_text) - n + 1):
-                #tuple_elements = []
                 tuple_set = ()
+
                 for i in range(0,n):
-                    #tuple_elements.append(format_text[index + i]) 
                     tuple_set = tuple_set + (format_text[index + i],) 
-                 
-                #value_list.append(tuple(tuple_elements))
                 tweet_month_dic[year_month].append(tuple_set)
 
-
-    
     topk_tweet_month = []
+
     for month, n_gram in tweet_month_dic.items():
         top_k_ngrams = find_top_k(n_gram, k)
         pass_value = (month, top_k_ngrams)
         topk_tweet_month.append(pass_value)
 
-
     ordered_topk = sorted(topk_tweet_month)
-
-
-
-
-        
 
     return ordered_topk
 
     
-
-
-
-
-
 def parse_args(args):
     '''                                                                                                                
     Parse the arguments                                                                                                
