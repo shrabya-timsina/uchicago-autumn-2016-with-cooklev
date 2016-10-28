@@ -12,6 +12,25 @@ from queue import PriorityQueue
 
 ### YOUR voter, voter_sample, and precinct classes GO HERE.
 
+class Voter(object):
+    ID = 0
+    def __init__(self, ID, time_to_arrive, waiting_time, voting_duration, departure_time):
+        self.ID = Voter.ID
+        ID += 1
+        self.time_to_arrive = None
+        self.waiting_time = waiting_time
+        self.voting_duration = voting_duration
+        self.departure_time = departure_time
+
+        
+
+    # Include the time the voter arrives at the polls (time to arrive, initialized to None)
+    #, voting duration, time voter is assigned to a voting booth (waiting time).
+    # store a unique identifier
+    # departure time
+
+
+
 def simulate_election_day(config):
     # YOUR CODE HERE.
     # REPLACE [] with a list of voter objects
