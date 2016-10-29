@@ -41,12 +41,26 @@ class Precinct(object):
             "seed:" + str(self.seed))    
 
 
+    def __repr__(self):
+        return ("arrival_rate is " + str(self.arrival_rate) + 
+            ", hours_open are " + str(self.hours_open) +
+            ", num_voters are " + str(self.num_voters) +
+            ", seed: " + str(self.seed))    
+
 class Voter_Sample(object):
     voter_list = []
     def __init__(self, json, num_booths):
         Precinct.__init__(self, json, num_booths)
         voter_info = (arrival_time(self), voting_duration(self), self.start_time, self.departure_time)
         voter_list.append(voter_info)
+
+        Voter.__init__(self, json, num_booths)
+        while self.hours_open > 0:
+            voter_info = (arrival_time(self), voting_duration(self), self.start_time, self.departure_time)
+            voter_list.append(voter_info)
+            self.hours_open = self.hours_open - arrival_time(self)
+        print(voter_list)    
+
 
     '''
     def do_stuff():
@@ -78,6 +92,29 @@ class Voter(Voter_Sample):
     @property
     def voting_duration(self):
         return util.gen_voter_parameters(arrival_rate, voting_duration_rate)[1]
+
+
+    def __repr__(self):
+        return ("arrival_time for voter is: " + str(self.arrival_time) +
+            " departure_time:" + str(self.departure_time) + 
+            " Voter ID is" + str(self.ID))
+
+
+    @property
+    def arrival_time(self):
+        self.gap = util.gen_voter_parameters(arrival_rate, voting_duration_rate)[0]
+        prev_ID = self.ID - 1
+        self.arrival_time = self.gap + arrival_time(self.prev_ID)
+        return self.arrival_time
+
+
+    @property
+    def voting_duration(self):
+        return util.gen_voter_parameters(arrival_rate, voting_duration_rate)[1]
+
+    @property
+    def departure_time(self):
+        return (voting_duration(self) + start_time(self))
 
     @property
     def departure_time(self):
