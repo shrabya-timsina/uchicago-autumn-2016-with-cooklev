@@ -34,6 +34,7 @@ class Precinct(object):
             ", seed: " + str(self.seed))    
 
 class Voter_Sample(object):
+    ID = 0
     voter_list = []
     def __init__(self, json, num_booths):
         Precinct.__init__(self, json, num_booths)
@@ -46,7 +47,6 @@ class Voter_Sample(object):
 
 
 class Voter(object):
-    ID = 0
     def __init__(self, json, num_booths):
         self.ID = ID
         ID += 1
