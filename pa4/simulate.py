@@ -27,6 +27,7 @@ def test():
     
 class Voter(object):
     ID = 0
+<<<<<<< HEAD
     def __init__(self, arrival_time, voting_duration):
         Voter.ID += 1
         self.ID = Voter.ID
@@ -97,8 +98,71 @@ def simulate_election_day(json, num_booths):
       
     # REPLACE [] with a list of voter objects
     return []
+=======
+    def __init__(self, json, num_booths):
+        Voter.ID += 1
+        self.ID =
+        self.arrival_rate = arrival_rate
+        self.voting_duration_rate = voting_duration_rate
+
+    def __repr__(self):
+        return ("arrival_time for voter is: " + str(self.arrival_time) +
+            " departure_time:" + str(self.departure_time) +
+            " Voter ID is" + str(self.ID))
+
+    @property
+    def arrival_time(self):
+        self.gap = util.gen_voter_parameters(arrival_rate, voting_duration_rate)[0]
+        prev_ID = self.ID - 1
+        self.arrival_time = self.gap + arrival_time(self.prev_ID)
+        return self.arrival_time
 
 
+    @property
+    def voting_duration(self):
+        return util.gen_voter_parameters(arrival_rate, voting_duration_rate)[1]
+
+    @property
+    def departure_time(self):
+        return (voting_duration(self) + start_time(self))
+
+
+class Voter_Sample(object):
+    ID = 0
+    voter_list = []
+    def __init__(self, json, num_booths):
+        Precinct.__init__(self, json, num_booths)
+        Voter.__init__(self, json, num_booths)
+        while self.hours_open > 0:
+            voter_info = (arrival_time(self), voting_duration(self), self.start_time, self.departure_time)
+            voter_list.append(voter_info)
+            self.hours_open = self.hours_open - arrival_time(self)
+        print(voter_list)    
+
+>>>>>>> 6d2992b61a054d601435b047992410ecb59af933
+
+
+class Precinct(object):
+    def __init__(self, json, num_booths):
+        key = util.setup_config(json, num_booths)
+        
+        self.arrival_rate = key["arrival_rate"]
+        self.hours_open = key["hours_open"]
+        self.num_voters = key["num_voters"]
+        self.num_booths = num_booths
+        self.seed = key["seed"]
+        self.voting_duration_rate = key["voting_duration_rate"]
+
+    def __repr__(self):
+        return ("arrival_rate is " + str(self.arrival_rate) +
+            ", hours_open are " + str(self.hours_open) +
+            ", num_voters are " + str(self.num_voters) +
+            ", seed: " + str(self.seed))    
+
+
+
+def simulate_election_day(config):
+    # YOUR CODE HERE.
 if __name__ == "__main__":
     # process arguments
     num_booths = 1
