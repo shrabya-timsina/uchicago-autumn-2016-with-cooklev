@@ -1,7 +1,6 @@
 # CS121: Polling places
 #
-# Steven and Shrabya
-#
+# Name: Steven Cooklev and Shrabya Timsina
 # Main file for polling place simulation
 
 import sys
