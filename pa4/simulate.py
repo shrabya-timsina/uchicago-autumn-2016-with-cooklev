@@ -146,20 +146,15 @@ def simulate_election_day(json, num_booths):
     booth_queue = prec.initialize_booth(num_booths)
 
     generate_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate)
-    #print(generate_voter)
     new_voter = generate_voter.find_start_and_dep_time(booth_queue, t)
     t = new_voter.arrival_time
 
-    #print(new_voter)
 
     while new_voter.arrival_time < total_time_in_min and num_voters_remaining > 0:
         voter_list.append(new_voter)
         num_voters_remaining -= 1
-        oldvoter = new_voter.departure_time
         generate_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate)
-        #print(generate_voter)
         new_voter = generate_voter.find_start_and_dep_time(booth_queue, t)
-        new_voter.arrival_time = oldvoter
         t = new_voter.arrival_time
 
     return util.print_voters(voter_list)
