@@ -8,41 +8,22 @@ import util
 
 from queue import PriorityQueue
 
-
-def test_function(json, num_booths):
-    t = 0
-    voter_list = []
-    prec = Precinct(json, num_booths)
-    for voter in range(1, prec.num_voters):
-        voter_sam = Voter_Sample(prec.arrival_rate, prec.voting_rate, t)
-        t = voter_sam.arrival_time
-        voter_list.append(voter_sam) 
-    util.print_voters(voter_list)
-
-def test_class():
-    prec1 = Precinct("data/config-2.json", 2)
-    v1 = Voter_Sample(prec1.arrival_rate, prec1.voting_rate, t = 0)
-    print(prec1)
-    print(v1)
-    Precinct.find_start_and_dep_time_of_next_voter(prec1, 2, Precinct.initialize_booth(prec1, 2))
-
-
 def test_all():
-    json = "data/config-1.json"
-    num_booths = 1
+    json = "data/config-2.json"
+    num_booths = 2
     simulate_election_day(json, num_booths)
-    open("output.txt", 'w' )
+    #open("output.txt", 'w' )
 
 
 ### YOUR voter, voter_sample, and precinct classes GO HERE.
     
 class Voter(object):
     
-    def __init__(self, gap_time, voting_duration, t):
+    def __init__(self, gap_time, voting_duration, time_now):
         
         self._voting_duration = voting_duration
         self._start_time = None
-        self._arrival_time = t + gap_time 
+        self._arrival_time = time_now + gap_time 
         self._departure_time = None
 
     @property
@@ -84,20 +65,32 @@ class Voter(object):
 
 class Voter_Sample(object):
     def __init__(self, arrival_rate, voting_rate):
-        self.arrival_rate = arrival_rate
-        self.voting_rate = voting_rate
-         
+        
+        (self.gap_time, self.voting_duration) = util.gen_voter_parameters(arrival_rate, voting_rate)
+        
+
 
     def __str__(self):
-        return "Voter_Sampled({})".format(Voter(new_voter.arrival_time, new_voter.voting_duration, new_voter.start_time, new_voter.departure_time))    
+        return "Voter_Sampled({}, {})".format(self.gap_time, self.voting_duration)    
 
     def __repr__(self):
          return str(self)   
 
-    def find_start_and_dep_time(self, booth_queue, t):
+    
+
+    def has_next(self, time_now, total_time_in_min, num_voters_remaining):
+        if (time_now + self.gap_time < total_time_in_min) and (num_voters_remaining > 0):
+            return True
+        else:
+            return False
+
+
+
+    def next(self, booth_queue, time_now):
         
-        (gap_time, voting_duration) = util.gen_voter_parameters(self.arrival_rate, self.voting_rate)
-        new_voter = Voter(gap_time, voting_duration, t)
+        assert(self.has_next)
+        
+        new_voter = Voter(self.gap_time, self.voting_duration, time_now)
 
         if booth_queue.full() == False:
             new_voter.start_time = new_voter.arrival_time
@@ -116,13 +109,15 @@ class Voter_Sample(object):
 
 class Precinct(object):
     def __init__(self, json, num_booths):
-        key = util.setup_config(json, num_booths)
-        self.arrival_rate = key["arrival_rate"]
-        self.hours_open = key["hours_open"]
-        self.num_voters = key["num_voters"]
+        prec_info = util.setup_config(json, num_booths)
+        self.arrival_rate = prec_info["arrival_rate"]
+        self.hours_open =  prec_info["hours_open"]
+        self.max_time_in_min = 60 * self.hours_open
+
+        self.num_voters = prec_info["num_voters"]
         self.num_booths = num_booths
-        self.seed = key["seed"]
-        self.voting_rate = key["voting_duration_rate"]
+        self.seed = prec_info["seed"]
+        self.voting_rate = prec_info["voting_duration_rate"]
        
     def __repr__(self):
         return ("arrival_rate is " + str(self.arrival_rate) + 
@@ -131,30 +126,35 @@ class Precinct(object):
             ", seed: " + str(self.seed))        
 
      
-    def initialize_booth(self, num_booths):
-        booth_queue = PriorityQueue(num_booths)
+    def initialize_booth(self):
+        booth_queue = PriorityQueue(self.num_booths)
         return booth_queue
+
+    def simulate_election_in_precinct(self):
+ 
+        voter_list = []
+        time_now = 0
+        num_voters_remaining = self.num_voters
+        booth_queue = self.initialize_booth()
+        generate_voter = Voter_Sample(self.arrival_rate, self.voting_rate)
+        
+        while generate_voter.has_next(time_now, self.max_time_in_min, num_voters_remaining):
+            new_voter = generate_voter.next(booth_queue, time_now)
+            voter_list.append(new_voter)
+            num_voters_remaining -= 1
+            time_now = new_voter.arrival_time
+            generate_voter = Voter_Sample(self.arrival_rate, self.voting_rate)
+
+
+        return voter_list
+
+
 
 
 def simulate_election_day(json, num_booths):
-    voter_list = []
-    t = 0
-    prec = Precinct(json, num_booths)
-    total_time_in_min = 60 * prec.hours_open
-    num_voters_remaining = prec.num_voters
-    booth_queue = prec.initialize_booth(num_booths)
-
-    generate_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate)
-    new_voter = generate_voter.find_start_and_dep_time(booth_queue, t)
-    t = new_voter.arrival_time
-
-
-    while new_voter.arrival_time < total_time_in_min and num_voters_remaining > 0:
-        voter_list.append(new_voter)
-        num_voters_remaining -= 1
-        generate_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate)
-        new_voter = generate_voter.find_start_and_dep_time(booth_queue, t)
-        t = new_voter.arrival_time
+    
+    precint_instance = Precinct(json, num_booths)
+    voter_list = precint_instance.simulate_election_in_precinct()     
 
     return util.print_voters(voter_list)
 
