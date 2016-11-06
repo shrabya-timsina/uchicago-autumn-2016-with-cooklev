@@ -1,0 +1,33 @@
+Points:
+    Tests:
+        Points Possible: 20
+        Points Obtained: 
+
+    Structure/Style - basic style:
+        Points Possible: 10
+        Points Obtained: 
+
+    Implementation Details - Using objects properly:
+        Points Possible: 12
+        Points Obtained: 
+
+    Implementation Details - Voter class:
+        Points Possible: 5
+        Points Obtained: 
+
+    Implementation Details - VoterSample class:
+        Points Possible: 25
+        Points Obtained: 
+
+    Implementation Details - Precinct class:
+        Points Possible: 10
+        Points Obtained: 
+
+    Implementation Details - Simulation:
+        Points Possible: 18
+        Points Obtained: 
+
+Total Points: 0 / 100
+
+Comments: >
+    None
