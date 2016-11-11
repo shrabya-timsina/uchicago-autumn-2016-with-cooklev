@@ -27,7 +27,7 @@ Points:
         Points Possible: 18
         Points Obtained: 18
 
-Total Points: 94 / 100
+Total Points: 92 / 100
 
 Comments: >
     Two bugs that fails all the tests. Modified by the grader. Unproper implementation of some logics inside precinct and voter_sample class is deducted in Using objects properly part.
