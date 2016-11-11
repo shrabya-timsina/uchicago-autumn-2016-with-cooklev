@@ -96,7 +96,9 @@ class Voter_Sample(object):
 
 
         
-
+    ### GRADER COMMENT:
+    ### Logic here should be placed inside simulate_election_day.
+    ### Penalty: -3 Pts
     def next(self, booth_queue, time_now):
         """
         assigns a start time to a voter
@@ -140,10 +142,13 @@ class Precinct(object):
     uses information to create a boothqueue and simulate election
     """
 
-
+    ### GRADER COMMENT:
+    ### Bugs here. json is not a file, it's already parsed. Modified by grader.
+    ### Penalty: -1 Pts
     def __init__(self, json, num_booths):
 
-        prec_info = util.setup_config(json, num_booths)
+        #prec_info = util.setup_config(json, num_booths)
+        prec_info = json
         self.arrival_rate = prec_info["arrival_rate"]
         self.hours_open =  prec_info["hours_open"]
         self.max_time_in_min = 60 * self.hours_open
@@ -158,7 +163,10 @@ class Precinct(object):
             ", num_voters are " + str(self.num_voters) +
             ", seed: " + str(self.seed))        
 
-    
+    ### GRADER COMMENT: 
+    ### You should not placed simulation logic inside this class. Those should be in simulate_election_day.
+    ### Penalty: -3 Pts
+
     def simulate_election_in_precinct(self):
         """
         requests new voter generation while voters arrive before closing time
@@ -192,8 +200,12 @@ class Precinct(object):
 
 
 
+### GRADER COMMENT:
+### You should not change the para list of given functions. Modified by grader.
+### Penalty: -1 Pts
 
-def simulate_election_day(json, num_booths):
+#def simulate_election_day(json, num_booths):
+def simulate_election_day(json):
     """
     simulates an election at one precint 
 
@@ -202,7 +214,7 @@ def simulate_election_day(json, num_booths):
 
     returns: voter_list - the list of valid voter instances
     """
-
+    num_booths = json["number_of_booths"]
     precint_instance = Precinct(json, num_booths)
 
     #simulation actually in .simulate_election_in_precinct of Precint class

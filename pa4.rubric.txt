@@ -1,33 +1,33 @@
 Points:
     Tests:
         Points Possible: 20
-        Points Obtained: 
+        Points Obtained: 18
 
     Structure/Style - basic style:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 10
 
     Implementation Details - Using objects properly:
         Points Possible: 12
-        Points Obtained: 
+        Points Obtained: 6
 
     Implementation Details - Voter class:
         Points Possible: 5
-        Points Obtained: 
+        Points Obtained: 5
 
     Implementation Details - VoterSample class:
         Points Possible: 25
-        Points Obtained: 
+        Points Obtained: 25
 
     Implementation Details - Precinct class:
         Points Possible: 10
-        Points Obtained: 
+        Points Obtained: 10
 
     Implementation Details - Simulation:
         Points Possible: 18
-        Points Obtained: 
+        Points Obtained: 18
 
-Total Points: 0 / 100
+Total Points: 94 / 100
 
 Comments: >
-    None
+    Two bugs that fails all the tests. Modified by the grader. Unproper implementation of some logics inside precinct and voter_sample class is deducted in Using objects properly part.
