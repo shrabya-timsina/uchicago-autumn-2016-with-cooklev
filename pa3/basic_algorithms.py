@@ -54,6 +54,7 @@ def find_min_count(items, min_count):
     # independent loci of code to fix the bug. If this functionality were con-
     # tained in a helper sub-function, then you would need only debug that one
     # sub-function.
+    # PENALTY: -1
 
     # getting count of items
     for item in items:
@@ -88,6 +89,9 @@ def find_frequent(items, k):
             if len(freq_dic) < (k - 1):
                 freq_dic.update({item: 1})
             else:
+                ### GRADER COMMENT: you can combine this code into one 
+                ### comprehension:
+                ### {item: count-1 for item, count in freq_dic.items() if count > 1}
                 freq_dic = {item: count - 1 for item, count in freq_dic.items()}
                 freq_dic = {item: count for item, count in freq_dic.items() if count != 0}
         else: 
