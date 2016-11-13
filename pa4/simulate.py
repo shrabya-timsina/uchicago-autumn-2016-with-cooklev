@@ -55,7 +55,8 @@ class Voter_Sample(object):
         self.departure_time = None
 
     def __str__(self):
-        return "Voter_Sampled({})".format(Voter(self.arrival_time, self.voting_duration, self.start_time, self.departure_time))    
+        voter_added = Voter(self.arrival_time, self.voting_duration, self.start_time, self.departure_time)
+        return "Voter_Sampled({})".format(voter_added)    
 
     def __repr__(self):
          return str(self)   
@@ -66,11 +67,11 @@ class Voter_Sample(object):
             self.departure_time = self.start_time + self.voting_duration
             booth_queue.put(self.departure_time)
         else:
-            value = booth_queue.get()
-            if value < self.arrival_time:
+            next_departure_time = booth_queue.get()
+            if next_departure_time < self.arrival_time:
                 self.start_time = self.arrival_time
             else:
-                self.start_time = value 
+                self.start_time = next_departure_time 
             self.departure_time = self.start_time + self.voting_duration
             booth_queue.put(self.departure_time)
         return self
@@ -100,12 +101,13 @@ class Precinct(object):
 
 def simulate_election_day(json, num_booths):
     voter_list = []
-    t = 0
+    
     prec = Precinct(json, num_booths)
     total_time_in_min = 60 * prec.hours_open
     num_voters_remaining = prec.num_voters
     booth_queue = prec.initialize_booth(num_booths)
 
+    t = 0
     next_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate, t)
     next_voter.find_start_and_dep_time(booth_queue)
     t = next_voter.arrival_time
@@ -113,6 +115,7 @@ def simulate_election_day(json, num_booths):
     while next_voter.arrival_time < total_time_in_min and num_voters_remaining > 0:
         voter_list.append(next_voter)
         num_voters_remaining -= 1
+
         next_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate, t)
         next_voter.find_start_and_dep_time(booth_queue)
         t = next_voter.arrival_time
