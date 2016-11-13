@@ -1,7 +1,6 @@
 # CS121: Polling places
 #
-# Steven and Shrabya
-#
+# Name: Steven Cooklev and Shrabya Timsina
 # Main file for polling place simulation
 
 import sys
@@ -9,83 +8,149 @@ import util
 
 from queue import PriorityQueue
 
-
-def test_function(json, num_booths):
-    t = 0
-    voter_list = []
-    prec = Precinct(json, num_booths)
-    for voter in range(1, prec.num_voters):
-        voter_sam = Voter_Sample(prec.arrival_rate, prec.voting_rate, t)
-        t = voter_sam.arrival_time
-        voter_list.append(voter_sam) 
-    util.print_voters(voter_list)
-
-def test_class():
-    prec1 = Precinct("data/config-2.json", 2)
-    v1 = Voter_Sample(prec1.arrival_rate, prec1.voting_rate, t = 0)
-    print(prec1)
-    print(v1)
-    Precinct.find_start_and_dep_time_of_next_voter(prec1, 2, Precinct.initialize_booth(prec1, 2))
+def test_all():
+    json = "data/config-3.json"
+    num_booths = 1
+    util.print_voters(simulate_election_day(json, num_booths))
 
 ### YOUR voter, voter_sample, and precinct classes GO HERE.
     
 class Voter(object):
-    ID = 0
-    def __init__(self, arrival_time, voting_duration, start_time, departure_time):
-        Voter.ID += 1
-        self.ID = Voter.ID
-        self.arrival_time = arrival_time
-        self.voting_duration = voting_duration
-        self.start_time = start_time
-        self.departure_time = departure_time
+    """
+    contains information about the voter 
+    using info passed from Voter_Sample class
+    """
+    
+    def __init__(self, gap_time, voting_duration, time_now):
+        
+        self._arrival_time = time_now + gap_time 
+        self._voting_duration = voting_duration
+        self._start_time = None 
+        self._departure_time = None
 
+    @property
+    def arrival_time(self):
+        return self._arrival_time
+
+    @property
+    def voting_duration(self):
+        return self._voting_duration 
+
+    @property
+    def start_time(self):
+        return self._start_time
+
+    @property
+    def departure_time(self):
+        return self._departure_time
+
+
+    @start_time.setter
+    def start_time(self, value_from_Vsample):
+        self._start_time = value_from_Vsample
+
+    @departure_time.setter
+    def departure_time(self, value_from_Vsample):
+        self._departure_time = value_from_Vsample
 
     def __str__(self):
-        return "Voter({}, {}, {}, {}, {})".format(self.ID, self.arrival_time, self.voting_duration, self.start_time, self.departure_time)
+        return "Voter({}, {}, {}, {})".format(self.arrival_time, 
+            self.voting_duration, self.start_time, self.departure_time)
 
     def __repr__(self):
         return (str(self))
 
 
-class Voter_Sample(object):
-    def __init__(self, arrival_rate, voting_rate, t):
-        (self.gap_time, self.voting_duration) = util.gen_voter_parameters(arrival_rate, voting_rate)
-        self.arrival_time = t + self.gap_time 
-        self.start_time = None
-        self.departure_time = None
 
+class Voter_Sample(object):
+    """
+    obtains gap and voting duration times
+    creates voter instances and gives them start and depart times
+    """
+    
+    def __init__(self, arrival_rate, voting_rate):
+        
+        #obtaining actual times by prviding rates
+        (self.gap_time, self.voting_duration) = \
+            util.gen_voter_parameters(arrival_rate, voting_rate)
+        
     def __str__(self):
-        voter_added = Voter(self.arrival_time, self.voting_duration, self.start_time, self.departure_time)
-        return "Voter_Sampled({})".format(voter_added)    
+        return "Voter_Sampled({}, {})".format(self.gap_time, 
+            self.voting_duration)    
 
     def __repr__(self):
          return str(self)   
+    
 
-    def find_start_and_dep_time(self, booth_queue):
-        if booth_queue.full() == False:
-            self.start_time = self.arrival_time
-            self.departure_time = self.start_time + self.voting_duration
-            booth_queue.put(self.departure_time)
+    def has_next(self, time_now, total_time_in_min, num_voters_remaining):
+        """
+        checks to see if there are remaining valid voters
+        and returns a boolean 
+        """
+
+        max_voter_condition = (num_voters_remaining > 0)
+        time_condition = (time_now + self.gap_time <= total_time_in_min)
+        all_conditions = max_voter_condition and time_condition
+        
+        return all_conditions
+
+
+        
+
+    def next(self, booth_queue, time_now):
+        """
+        assigns a start time to a voter
+        puts/removes a departure time from boothqueue
+        """ 
+        #creating an instance of a voter class 
+        new_voter = Voter(self.gap_time, self.voting_duration, time_now)
+        
+        #voters start voting on arrival if a booth is empty
+        if booth_queue.full() == False: 
+            
+            new_voter.start_time = new_voter.arrival_time
+            new_voter.departure_time = new_voter.start_time + \
+                new_voter.voting_duration
+            
+            booth_queue.put(new_voter.departure_time) 
+        
         else:
-            next_departure_time = booth_queue.get()
-            if next_departure_time < self.arrival_time:
-                self.start_time = self.arrival_time
+            next_available_departure = booth_queue.get()
+            
+            #if the voter's arrival time is after the earliest depart time
+            #then they vote upon arrival 
+            if next_available_departure < new_voter.arrival_time: 
+                new_voter.start_time = new_voter.arrival_time
+            
+            #if the voter's arrival time is before the earliest depart time
+            #then they vote right after the earliest depart time
             else:
-                self.start_time = next_departure_time 
-            self.departure_time = self.start_time + self.voting_duration
-            booth_queue.put(self.departure_time)
-        return self
+                new_voter.start_time = next_available_departure 
+            
+            new_voter.departure_time = new_voter.start_time + \
+                new_voter.voting_duration
+            booth_queue.put(new_voter.departure_time)
+        
+        return new_voter
 
 
 class Precinct(object):
+    """
+    extracts information about precint from json file
+    uses information to create a boothqueue and simulate election
+    """
+
+
     def __init__(self, json, num_booths):
-        key = util.setup_config(json, num_booths)
-        self.arrival_rate = key["arrival_rate"]
-        self.hours_open = key["hours_open"]
-        self.num_voters = key["num_voters"]
+
+        prec_info = util.setup_config(json, num_booths)
+        self.arrival_rate = prec_info["arrival_rate"]
+        self.hours_open =  prec_info["hours_open"]
+        self.max_time_in_min = 60 * self.hours_open
+        self.num_voters = prec_info["num_voters"] 
         self.num_booths = num_booths
-        self.seed = key["seed"]
-        self.voting_rate = key["voting_duration_rate"]
+        self.seed = prec_info["seed"]
+        self.voting_rate = prec_info["voting_duration_rate"]
        
     def __repr__(self):
         return ("arrival_rate is " + str(self.arrival_rate) + 
@@ -93,34 +158,57 @@ class Precinct(object):
             ", num_voters are " + str(self.num_voters) +
             ", seed: " + str(self.seed))        
 
-     
-    def initialize_booth(self, num_booths):
-        booth_queue = PriorityQueue(num_booths)
-        return booth_queue
+    
+    def simulate_election_in_precinct(self):
+        """
+        requests new voter generation while voters arrive before closing time
+        and there are still voters remaining
+        and adds voters who have voted to voter_list
+        """
+
+        voter_list = []
+        time_now = 0
+        num_voters_remaining = self.num_voters
+
+        #stores the departure times of voters who are using the booths
+        booth_queue = PriorityQueue(self.num_booths)
+
+        if self.num_booths > 0 and self.num_voters > 0:
+            generate_voter = Voter_Sample(self.arrival_rate, self.voting_rate)
+
+            while generate_voter.has_next(time_now, self.max_time_in_min, 
+                num_voters_remaining):
+                
+                next_voter = generate_voter.next(booth_queue, time_now)
+                voter_list.append(next_voter)
+                
+                num_voters_remaining -= 1
+                time_now = next_voter.arrival_time
+                
+                generate_voter = Voter_Sample(self.arrival_rate, 
+                    self.voting_rate)
+
+        return voter_list
+
+
 
 
 def simulate_election_day(json, num_booths):
-    voter_list = []
-    
-    prec = Precinct(json, num_booths)
-    total_time_in_min = 60 * prec.hours_open
-    num_voters_remaining = prec.num_voters
-    booth_queue = prec.initialize_booth(num_booths)
+    """
+    simulates an election at one precint 
 
-    t = 0
-    next_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate, t)
-    next_voter.find_start_and_dep_time(booth_queue)
-    t = next_voter.arrival_time
+    parameters: json - a precint config json file with precint info
+                num_booths - the number of booths in the precinct
 
-    while next_voter.arrival_time < total_time_in_min and num_voters_remaining > 0:
-        voter_list.append(next_voter)
-        num_voters_remaining -= 1
+    returns: voter_list - the list of valid voter instances
+    """
 
-        next_voter = Voter_Sample(prec.arrival_rate, prec.voting_rate, t)
-        next_voter.find_start_and_dep_time(booth_queue)
-        t = next_voter.arrival_time
+    precint_instance = Precinct(json, num_booths)
 
-    return util.print_voters(voter_list)
+    #simulation actually in .simulate_election_in_precinct of Precint class
+    voter_list = precint_instance.simulate_election_in_precinct()     
+
+    return voter_list
 
 if __name__ == "__main__":
     # process arguments
