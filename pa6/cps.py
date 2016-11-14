@@ -53,6 +53,39 @@ def build_morg_df(morg_filename):
     # Your code here...
 
     # replace None with suitable return value
+    morg_filename = "data/morg_d07.csv"
+    
+    if os.path.exists(morg_filename) == False:
+        return None
+
+      
+    morg_df = pd.read_csv(morg_filename, index_col= HID)
+
+    for col_name in morg_df.columns[1:5]:
+        code_file = pd.read_csv(CODE_TO_FILENAME[col_name])
+        #print(code_file)
+        codes = code_file[code_file.columns[0]].values
+        print(codes)
+        categories = code_file[code_file.columns[1]].values
+        print(categories)
+
+        morg_df[col_name] = pd.Categorical.from_codes(codes, categories=categories)
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
     return None
 
 
