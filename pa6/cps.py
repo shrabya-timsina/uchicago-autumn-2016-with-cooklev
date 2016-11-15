@@ -39,6 +39,8 @@ VAR_TO_FILENAME = {GENDER: CODE_TO_FILENAME["gender_code"],
                         RACE: CODE_TO_FILENAME["race_code"]}
 
 
+
+
 def build_morg_df(morg_filename):
     '''
     Construct a DF from the specified file.  Resulting dataframe will
@@ -53,40 +55,31 @@ def build_morg_df(morg_filename):
     # Your code here...
 
     # replace None with suitable return value
-    morg_filename = "data/morg_d07.csv"
+
     
     if os.path.exists(morg_filename) == False:
         return None
-
       
-    morg_df = pd.read_csv(morg_filename, index_col= HID)
+    morg_df = pd.read_csv(morg_filename)
 
-    for col_name in morg_df.columns[1:5]:
+    for col_name in morg_df.columns[2:6]:
+        
         code_file = pd.read_csv(CODE_TO_FILENAME[col_name])
-        #print(code_file)
-        codes = code_file[code_file.columns[0]].values
-        print(codes)
         categories = code_file[code_file.columns[1]].values
-        print(categories)
 
-        morg_df[col_name] = pd.Categorical.from_codes(codes, categories=categories)
+        if col_name != "ethnicity_code":
+           
+            morg_df[col_name] = pd.Categorical.from_codes(morg_df[col_name] - 1, categories)
 
-
-
-
-
-
-
-
-
-
-
+        else:
+            morg_df[col_name] = morg_df[col_name].fillna(value = 0)
+            morg_df[col_name] = pd.Categorical.from_codes(morg_df[col_name], categories)
     
+        
+        morg_df.rename(columns = {col_name: col_name[:len(col_name) - 5]}, inplace=True)
 
+    return morg_df
 
-
-
-    return None
 
 
 def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethnicity):
@@ -106,7 +99,56 @@ def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethni
     # Your code here...
 
     # replace [0,0,0,0] with a suitable return value
-    return (0, 0, 0, 0)
+    
+    valid_gender = ["Male", "Female", "All"]
+
+    possible_single_races = ["WhiteOnly", "BlackOnly", 
+        "AmericanIndian/AlaskanNativeOnly", "AsianOnly", 
+        "Hawaiian/PacificIslanderOnly"]
+
+    valid_races = possible_single_races + ["Other", "All"]
+    
+    valid_ethnicity = ["Hispanic", "Non-Hispanic", "All"]
+    
+   
+
+    if (gender not in valid_gender) or (race not in valid_races) \
+        or (ethnicity not in valid_ethnicity):
+        return (0,0,0,0)
+
+    
+    search_criteria = (df.hours_worked_per_week > 35) & \
+        (df.employment_status == 'Working')
+
+
+    if gender != "All":
+        search_criteria = search_criteria & (df.gender == gender)
+
+   
+    if race in possible_single_races:
+        search_criteria = search_criteria & (df.race == race)
+    elif race == "Other":
+        search_criteria = search_criteria & \
+            (df.race.isin(possible_single_races) == False)
+
+
+    if ethnicity == "Hispanic":
+        search_criteria = search_criteria & (df.ethnicity != "Non-Hispanic")
+    elif ethnicity == "Non-Hispanic":
+        search_criteria = search_criteria & (df.ethnicity == "Non-Hispanic")
+
+   
+
+    filtered_df = df[search_criteria]
+    #print(filtered_df)
+
+    mean_earning = filtered_df[EARNWKE].mean()
+    median_earning = filtered_df[EARNWKE].median()
+    min_earning = filtered_df[EARNWKE].min()
+    max_earning = filtered_df[EARNWKE].max()
+
+
+    return (mean_earning, median_earning, min_earning, max_earning)
 
 
 def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
@@ -157,3 +199,10 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
 
     
     
+morg_filename = "data/morg_d07.csv"
+df = build_morg_df(morg_filename)
+gender = "All"
+race = "BlackOnly"
+ethnicity = "Non-Hispanic"
+zz = calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethnicity)
+print(zz)
