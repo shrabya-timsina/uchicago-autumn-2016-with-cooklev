@@ -96,9 +96,6 @@ def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethni
     Returns: (mean, median, min, max) for the rows that match the filter.
     '''
 
-    # Your code here...
-
-    # replace [0,0,0,0] with a suitable return value
     
     valid_gender = ["Male", "Female", "All"]
 
@@ -117,7 +114,7 @@ def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethni
         return (0,0,0,0)
 
     
-    search_criteria = (df.hours_worked_per_week > 35) & \
+    search_criteria = (df.hours_worked_per_week >= 35) & \
         (df.employment_status == 'Working')
 
 
@@ -140,13 +137,11 @@ def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethni
    
 
     filtered_df = df[search_criteria]
-    #print(filtered_df)
 
     mean_earning = filtered_df[EARNWKE].mean()
     median_earning = filtered_df[EARNWKE].median()
     min_earning = filtered_df[EARNWKE].min()
     max_earning = filtered_df[EARNWKE].max()
-
 
     return (mean_earning, median_earning, min_earning, max_earning)
 
@@ -172,7 +167,26 @@ def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
     # Your code here...
 
     # replace [] with a suitable return value
-    return []
+    
+    if (num_buckets <= 0) or (max_val <= min_val):
+        return []
+
+    boundaries = np.linspace(min_val, max_val, num = num_buckets + 1)
+    print(boundaries)
+    
+    df["bin"] = pd.cut(df[var_of_interest], 
+                            bins=boundaries,
+                            labels=range(len(boundaries)-1),
+                            include_lowest=True, right=False)
+
+
+
+
+    bucket_counts_series = (df["bin"].value_counts().sort_index())
+    bucket_counts_list = bucket_counts_series.tolist()
+    print(bucket_counts_list)
+
+    return bucket_counts_list
 
 
 def calculate_unemployment_rates(filenames, age_range, var_of_interest):
@@ -196,13 +210,12 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
 
 
     
-
-    
-    
-morg_filename = "data/morg_d07.csv"
+morg_filename = "data/morg_d10_mini.csv"
 df = build_morg_df(morg_filename)
-gender = "All"
-race = "BlackOnly"
+gender = "Female"
+race = "WhiteOnly"
 ethnicity = "Non-Hispanic"
-zz = calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethnicity)
-print(zz)
+
+
+print("histogram:")
+create_histogram(df, 'earnings_per_week', 50, 0.0, 3000.0)
