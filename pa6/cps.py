@@ -174,15 +174,18 @@ def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
     boundaries = np.linspace(min_val, max_val, num = num_buckets + 1)
     print(boundaries)
     
-    df["bin"] = pd.cut(df[var_of_interest], 
+    working_criteria = (df.hours_worked_per_week >= 35) & \
+        (df.employment_status == 'Working')
+
+    filtered_df = df[working_criteria]
+
+    filtered_df["bin"] = pd.cut(filtered_df[var_of_interest], 
                             bins=boundaries,
                             labels=range(len(boundaries)-1),
                             include_lowest=True, right=False)
 
 
-
-
-    bucket_counts_series = (df["bin"].value_counts().sort_index())
+    bucket_counts_series = (filtered_df["bin"].value_counts().sort_index())
     bucket_counts_list = bucket_counts_series.tolist()
     print(bucket_counts_list)
 
@@ -205,17 +208,84 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
     # Your code here...
 
     # replace None with suitable return value
-    return None
-
-
+    
 
     
+
+    valid_var_of_interest = [GENDER, RACE, ETHNIC]   
+
+    if (var_of_interest not in valid_var_of_interest):
+        return (0,0,0,0)
+    
+    (lower_bound, upper_bound) = age_range
+     
+    
+    code_file = pd.read_csv(VAR_TO_FILENAME[var_of_interest])
+    categories = code_file[code_file.columns[1]].values
+    unemployment_rates_df = pd.DataFrame(index = categories)
+    #print(unemployment_rates_df)
+
+
+
+
+    for dataset in filenames:
+
+        year = dataset[11:13]
+        unemployment_rates_df[year] = np.nan 
+        #year_series = pd.Series(np.zeros(shape = (len(unemployment_rates_df.index),) ) )
+        
+
+        df = build_morg_df(dataset)
+        
+        search_criteria = (df.age >= lower_bound) & (df.age <= upper_bound)
+        #search_criteria = search_criteria & (df.employment_status == "Layoff") | (df.employment_status == "Looking")
+        df = df[search_criteria]
+
+        
+
+        for category in categories:
+            print(category)
+
+            filtered_df = df[df[var_of_interest] == category]
+            print(filtered_df)
+            
+            num_of_unemployed = (filtered_df[STATUS] == "Layoff").sum() + \
+                (filtered_df[STATUS] == "Looking").sum()
+            print("unemp", num_of_unemployed)
+
+            total_num_of_individuals = num_of_unemployed + (filtered_df[STATUS] == "Working").sum()
+            print("unemp", total_num_of_individuals)
+
+            if total_num_of_individuals > 0:
+                unemployment_rate = num_of_unemployed / total_num_of_individuals
+                                
+            else:
+                unemployment_rate = 0.0
+
+            print(unemployment_rate)
+
+            unemployment_rates_df.set_value(category, year, unemployment_rate)
+            print(unemployment_rates_df)
+
+
+
+
+
+    return unemployment_rates_df
+   
 morg_filename = "data/morg_d10_mini.csv"
 df = build_morg_df(morg_filename)
 gender = "Female"
 race = "WhiteOnly"
 ethnicity = "Non-Hispanic"
 
+"""
+code_file = pd.read_csv(VAR_TO_FILENAME[RACE])
+categories = code_file[code_file.columns[1]].values
+unemployment_rates = pd.DataFrame(index = categories)
+print(unemployment_rates)
+print(type(unemployment_rates))
+"""
 
-print("histogram:")
-create_histogram(df, 'earnings_per_week', 50, 0.0, 3000.0)
+rate_df = calculate_unemployment_rates(["data/morg_d14.csv", "data/morg_d10.csv", "data/morg_d07.csv"], (50, 70), GENDER)
+print(rate_df)
