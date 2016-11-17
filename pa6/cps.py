@@ -1,5 +1,5 @@
 # CS121: Current Population Survey (CPS) 
-#
+# Shrabya Timsina and Steven Cooklev
 # Functions for mining CPS data 
 
 import csv
@@ -279,14 +279,16 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
     unemployment_rates_df.sort_index(axis = 1, inplace = True)
 
     return unemployment_rates_df
-   
+  
+
+"""  
 morg_filename = "data/morg_d10_mini.csv"
 df = build_morg_df(morg_filename)
 gender = "Female"
 race = "WhiteOnly"
 ethnicity = "Non-Hispanic"
 
-"""
+
 code_file = pd.read_csv(VAR_TO_FILENAME[RACE])
 categories = code_file[code_file.columns[1]].values
 unemployment_rates = pd.DataFrame(index = categories)
@@ -294,5 +296,9 @@ print(unemployment_rates)
 print(type(unemployment_rates))
 """
 
-rate_df = calculate_unemployment_rates(["data/morg_d14.csv", "data/morg_d10.csv", "data/morg_d14.csv", "data/morg_d07.csv"], (17, 80), GENDER)
+rate_df = calculate_unemployment_rates(["data/morg_d14.csv", "data/morg_d10.csv", "data/morg_d07.csv"], (50, 70), GENDER)
+print(rate_df)
+
+print()
+rate_df = calculate_unemployment_rates(["data/morg_d14.csv", "data/morg_d10.csv", "data/morg_d07.csv"], (22, 29), GENDER)
 print(rate_df)
