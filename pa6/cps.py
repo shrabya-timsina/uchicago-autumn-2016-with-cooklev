@@ -223,38 +223,43 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
     code_file = pd.read_csv(VAR_TO_FILENAME[var_of_interest])
     categories = code_file[code_file.columns[1]].values
     unemployment_rates_df = pd.DataFrame(index = categories)
-    #print(unemployment_rates_df)
+    
 
 
-
+    filenames = set(filenames)
 
     for dataset in filenames:
 
-        year = dataset[11:13]
-        unemployment_rates_df[year] = np.nan 
-        #year_series = pd.Series(np.zeros(shape = (len(unemployment_rates_df.index),) ) )
+        dataset_name = os.path.basename(dataset)
+
+        year_column_name = dataset_name[6:8]
+
+        
+       
+        year_array = np.zeros(shape = len(unemployment_rates_df.index))
+        year_series = pd.Series(data = year_array, index = categories, name = year_column_name)
         
 
-        df = build_morg_df(dataset)
+        morg_df = build_morg_df(dataset)
         
-        search_criteria = (df.age >= lower_bound) & (df.age <= upper_bound)
-        #search_criteria = search_criteria & (df.employment_status == "Layoff") | (df.employment_status == "Looking")
-        df = df[search_criteria]
+        search_criteria = (morg_df.age >= lower_bound) & (morg_df.age <= upper_bound)
+
+        morg_df = morg_df[search_criteria]
 
         
 
         for category in categories:
-            print(category)
+            #print(category)
 
-            filtered_df = df[df[var_of_interest] == category]
-            print(filtered_df)
+            filtered_df = morg_df[morg_df[var_of_interest] == category]
+            #print(filtered_df)
             
             num_of_unemployed = (filtered_df[STATUS] == "Layoff").sum() + \
                 (filtered_df[STATUS] == "Looking").sum()
-            print("unemp", num_of_unemployed)
+            #print("unemp", num_of_unemployed)
 
             total_num_of_individuals = num_of_unemployed + (filtered_df[STATUS] == "Working").sum()
-            print("unemp", total_num_of_individuals)
+            #print("unemp", total_num_of_individuals)
 
             if total_num_of_individuals > 0:
                 unemployment_rate = num_of_unemployed / total_num_of_individuals
@@ -262,14 +267,16 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
             else:
                 unemployment_rate = 0.0
 
-            print(unemployment_rate)
+            #print(unemployment_rate)
 
-            unemployment_rates_df.set_value(category, year, unemployment_rate)
-            print(unemployment_rates_df)
+            year_series.set_value(category, unemployment_rate)
+            #print(unemployment_rates_df)
+
+        unemployment_rates_df = pd.concat([year_series, unemployment_rates_df], axis=1)
 
 
-
-
+    unemployment_rates_df = unemployment_rates_df.reindex(unemployment_rates_df.index.astype("str")).sort_index()
+    unemployment_rates_df.sort_index(axis = 1, inplace = True)
 
     return unemployment_rates_df
    
@@ -287,5 +294,5 @@ print(unemployment_rates)
 print(type(unemployment_rates))
 """
 
-rate_df = calculate_unemployment_rates(["data/morg_d14.csv", "data/morg_d10.csv", "data/morg_d07.csv"], (50, 70), GENDER)
+rate_df = calculate_unemployment_rates(["data/morg_d14.csv", "data/morg_d10.csv", "data/morg_d14.csv", "data/morg_d07.csv"], (17, 80), GENDER)
 print(rate_df)
