@@ -80,7 +80,7 @@ def full_time_working_series(df):
     inputs:
         df: morg dataframe
     Returns:
-        working_criteria = pandas series of booleans regarding full-time status
+        working_criteria : pandas series of booleans regarding full-time status
     '''
     working_criteria = (df.hours_worked_per_week >= FULLTIME_MIN_WORKHRS) & \
         (df.employment_status == 'Working')
