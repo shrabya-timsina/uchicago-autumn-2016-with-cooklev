@@ -75,6 +75,17 @@ def build_morg_df(morg_filename):
 
     return morg_df
 
+def full_time_working_series(df):
+    '''
+    inputs:
+        df: morg dataframe
+    Returns:
+        working_criteria = pandas series of booleans regarding full-time status
+    '''
+    working_criteria = (df.hours_worked_per_week >= FULLTIME_MIN_WORKHRS) & \
+        (df.employment_status == 'Working')
+
+    return working_criteria
 
 def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethnicity):
     '''
@@ -106,8 +117,8 @@ def calculate_weekly_earnings_stats_for_fulltime_workers(df, gender, race, ethni
         or (ethnicity not in valid_ethnicity):
         return (0,0,0,0)
 
-    search_criteria = (df.hours_worked_per_week >= FULLTIME_MIN_WORKHRS) & \
-        (df.employment_status == 'Working')
+    #applying first criteria of full-time workers only
+    search_criteria = full_time_working_series(df) 
 
     if gender != "All":
         search_criteria = search_criteria & (df.gender == gender)
@@ -140,7 +151,7 @@ def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
 
     Inputs:
         df: morg dataframe
-        var_of_interest: one of EARNWKE, AGE, HWKE
+        var_of_interest: one of EARNWKE, AGE, HRWKE
         num_buckets: the number of buckets to use.
         min_val: minimal value (lower bound) for the histogram (inclusive)
         max_val: maximum value (lower bound) for the histogram (non-inclusive).
@@ -150,14 +161,15 @@ def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
 
         empty list if num_buckets <= 0 or max_val <= min_val
     '''
-    
-    if (num_buckets <= 0) or (max_val <= min_val):
+    valid_var_of_interest = [EARNWKE, AGE, HRWKE]
+
+    if (var_of_interest not in valid_var_of_interest) \
+        or (num_buckets <= 0) or (max_val <= min_val):
         return []
 
     boundaries = np.linspace(min_val, max_val, num = num_buckets + 1)
     
-    working_criteria = (df.hours_worked_per_week >= FULLTIME_MIN_WORKHRS) & \
-        (df.employment_status == 'Working')
+    working_criteria = full_time_working_series(df) 
 
     filtered_df = df[working_criteria]
 
@@ -214,7 +226,15 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
             index = categories, name = year_column_name)
         
         morg_df = build_morg_df(dataset)
-        search_criteria = (morg_df.age >= lower_bound) & (morg_df.age <= upper_bound)
+        
+        #in the case the file does not exist, skips to next filename
+        if morg_df is None: 
+            continue
+
+
+        search_criteria = (morg_df.age >= lower_bound) & \
+            (morg_df.age <= upper_bound)
+        
         morg_df = morg_df[search_criteria]
 
         for category in categories:
@@ -236,10 +256,14 @@ def calculate_unemployment_rates(filenames, age_range, var_of_interest):
 
         unemployment_rates_df = pd.concat([year_series, unemployment_rates_df], axis=1)
 
+    # changing index values to string to allow sorting by rows
+    unemployment_rates_df = unemployment_rates_df.reindex(unemployment_rates_df.index.astype("str"))
+
     # sort unemployment_rates_df rows in ascending order of index
-    unemployment_rates_df = unemployment_rates_df.reindex(unemployment_rates_df.index.astype("str")).sort_index()
+    unemployment_rates_df.sort_index(axis = 0, inplace = True)
 
     # sort unemployment_rates_df columns in ascending order of year
     unemployment_rates_df.sort_index(axis = 1, inplace = True)
 
     return unemployment_rates_df
+
