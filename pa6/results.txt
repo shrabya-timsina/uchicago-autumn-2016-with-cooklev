@@ -1,0 +1,51 @@
+/home/jhodonnell/grading/repositories/cs121-aut-16/pa6/scooklev-shrabya/pa6/cps.py:180: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  include_lowest = True, right = False)
+test_build_00: 1.00/1.00
+test_build_01: 1.00/1.00
+test_build_02: 1.00/1.00
+test_build_03: 1.00/1.00
+test_build_04: 1.00/1.00
+test_build_05: 1.00/1.00
+test_histogram_00: 0.50/0.50
+test_histogram_01: 0.50/0.50
+test_histogram_02: 0.50/0.50
+test_histogram_03: 0.50/0.50
+test_histogram_04: 0.50/0.50
+test_histogram_05: 0.33/0.33
+test_histogram_06: 0.33/0.33
+test_histogram_07: 0.33/0.33
+test_histogram_08: 0.33/0.33
+test_histogram_09: 0.33/0.33
+test_histogram_10: 0.33/0.33
+test_histogram_11: 0.33/0.33
+test_histogram_12: 0.33/0.33
+test_unemployment_00: 0.70/0.70
+test_unemployment_01: 0.70/0.70
+test_unemployment_02: 0.70/0.70
+test_unemployment_03: 0.70/0.70
+test_unemployment_04: 0.70/0.70
+test_unemployment_05: 0.70/0.70
+test_unemployment_06: 0.70/0.70
+test_unemployment_07: 0.70/0.70
+test_unemployment_08: 0.70/0.70
+test_unemployment_09: 0.70/0.70
+test_unemployment_10: 0.70/0.70
+test_unemployment_11: 0.70/0.70
+test_weekly_earnings_00: 0.90/0.90
+test_weekly_earnings_01: 0.50/0.50
+test_weekly_earnings_02: 0.50/0.50
+test_weekly_earnings_03: 0.25/0.25
+test_weekly_earnings_04: 0.50/0.50
+test_weekly_earnings_05: 0.50/0.50
+test_weekly_earnings_06: 0.50/0.50
+test_weekly_earnings_07: 0.39/0.39
+test_weekly_earnings_08: 0.39/0.39
+test_weekly_earnings_09: 0.50/0.50
+test_weekly_earnings_10: 0.25/0.25
+test_weekly_earnings_11: 0.25/0.25
+
+Total: 25.00/25.00

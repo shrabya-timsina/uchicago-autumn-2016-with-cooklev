@@ -1,29 +1,29 @@
 Points:
     Test cases:
         Points Possible: 25
-        Points Obtained: 
+        Points Obtained: 25
 
     Structure/Style:
         Points Possible: 15
-        Points Obtained: 
+        Points Obtained: 15
 
     Implementation Details - Task 1:
         Points Possible: 15
-        Points Obtained: 
+        Points Obtained: 15
 
     Implementation Details - Task 2:
         Points Possible: 15
-        Points Obtained: 
+        Points Obtained: 15
 
     Implementation Details - Task 3:
         Points Possible: 15
-        Points Obtained: 
+        Points Obtained: 15
 
     Implementation Details - Task 4:
         Points Possible: 15
-        Points Obtained: 
+        Points Obtained: 15
 
-Total Points: 0 / 100
+Total Points: 100 / 100
 
 Comments: >
-    None
+    Excellent job!

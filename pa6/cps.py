@@ -49,7 +49,8 @@ def build_morg_df(morg_filename):
     Returns: pandas dataframe
     '''
 
-
+    ### GRADER COMMENT
+    # Don't compare to a boolean
     if os.path.exists(morg_filename) == False:
         return None
       
@@ -71,6 +72,8 @@ def build_morg_df(morg_filename):
             morg_df[col_name] = pd.Categorical.from_codes(\
                 morg_df[col_name], categories)
     
+        ### GRADER COMMENT
+        # col_name[:-5]
         morg_df.rename(columns = {col_name: col_name[:len(col_name) - 5]}, inplace=True)
 
     return morg_df
@@ -82,6 +85,8 @@ def full_time_working_series(df):
     Returns:
         working_criteria : pandas series of booleans regarding full-time status
     '''
+    ### GRADER COMMENT
+    # Avoid backslash continuations
     working_criteria = (df.hours_worked_per_week >= FULLTIME_MIN_WORKHRS) & \
         (df.employment_status == 'Working')
 
@@ -163,6 +168,9 @@ def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
     '''
     valid_var_of_interest = [EARNWKE, AGE, HRWKE]
 
+    ### GRADER COMMENT
+    # Avoid backslash continuations
+    # Also, parenthases are unnecessary here
     if (var_of_interest not in valid_var_of_interest) \
         or (num_buckets <= 0) or (max_val <= min_val):
         return []
@@ -179,6 +187,8 @@ def create_histogram(df, var_of_interest, num_buckets, min_val, max_val):
                             labels = range(len(boundaries) - 1),
                             include_lowest = True, right = False)
 
+    ### GRADER COMMENT
+    # Parentheses unnecessary
     bucket_counts_series = (filtered_df["bin"].value_counts().sort_index())
     bucket_counts_list = bucket_counts_series.tolist()
 
